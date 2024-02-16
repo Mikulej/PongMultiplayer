@@ -6,6 +6,8 @@
 
 
 TO DO:
-
+make a map for VAOs and use it similiar to textures
+DELETE VAO VBO EBO
+change color of the background
 
 Server - Client
