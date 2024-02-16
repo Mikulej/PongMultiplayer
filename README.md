@@ -6,8 +6,8 @@
 
 
 TO DO:
-make a map for VAOs and use it similiar to textures
 DELETE VAO VBO EBO
 change color of the background
+Tuple {VAO, VBO, EBO} is an overkill store VAO only
 
 Server - Client

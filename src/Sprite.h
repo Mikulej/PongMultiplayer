@@ -14,7 +14,6 @@ enum class VaoType { CENTER, BOTTOM_LEFT };
 class Sprite final {
 	static std::unordered_map<std::string,unsigned int> textures;
 	static std::unordered_map<VaoType, std::tuple<unsigned, unsigned, unsigned>> vaos;
-	
 	Sprite(unsigned int _texture, float _x = 0, float _y = 0, unsigned int _layer = 0, VaoType _VAO = VaoType::CENTER);
 	static unsigned int generateTexture(std::string path);
 	static std::tuple<unsigned, unsigned, unsigned> generateVao(const VaoType& v);
@@ -26,14 +25,11 @@ class Sprite final {
 	float angle;
 	int layer;
 	unsigned int texture;
-	//int height;
-	//int width;
 	VaoType vaoType;
-	//unsigned int vaoType;
-	
 	bool isRendered;
+    static std::vector<Sprite> renderList;
 public:
-	static std::vector<Sprite> renderList; // is public solely for tests
+	
 	static void Initialize(void);
 	static void DeleteTextures(void);
 	~Sprite() = default;
@@ -42,7 +38,7 @@ public:
 	static void DeleteSprite(unsigned int _ID);
 	void DeleteSprite();
 	//MATRIX MAINPULATION
-	void setColor(int _c = -1, bool _marked = false);
+	//void setColor(int _c = -1, bool _marked = false);
 	void setScale(float x, float y);
 	void setPos(float x, float y);
 };

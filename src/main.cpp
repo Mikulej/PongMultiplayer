@@ -50,8 +50,6 @@ int main()
 
     glfwSwapInterval(1);
 
-    
-
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
     ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
@@ -59,8 +57,8 @@ int main()
     Sprite::Initialize();
     Sprite::AddSprite("box",0,0,0,VaoType::BOTTOM_LEFT);
     Sprite::AddSprite("box",0,0,0,VaoType::CENTER);
-    Sprite::AddSprite("box",-0.2f,-0.2f,0,VaoType::CENTER);
-    Sprite::AddSprite("box",-0.4f,-0.4f,0,VaoType::BOTTOM_LEFT);
+    //Sprite::AddSprite("box",-0.2f,-0.2f,0,VaoType::CENTER);
+    //Sprite::AddSprite("box",-0.4f,-0.4f,0,VaoType::BOTTOM_LEFT);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -87,7 +85,7 @@ int main()
 
     // optional: de-allocate all resources once they've outlived their purpose:
     // ------------------------------------------------------------------------
-
+    Sprite::DeleteTextures();
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------

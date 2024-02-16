@@ -16,9 +16,7 @@ void Sprite::Initialize() {
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     textures.insert({"box",generateTexture("../res/box.png") });
     vaos.insert({ VaoType::CENTER,generateVao(VaoType::CENTER) });
-    std::cout << "std::get<0>(vaos.at(VaoType::CENTER))=" << std::get<0>(vaos.at(VaoType::CENTER)) <<std::endl;
     vaos.insert({ VaoType::BOTTOM_LEFT,generateVao(VaoType::BOTTOM_LEFT) });
-   std::cout << "std::get<0>(vaos.at(VaoType::BOTTOM_LEFT))=" << std::get<0>(vaos.at(VaoType::BOTTOM_LEFT)) <<std::endl;
 }
 void Sprite::DeleteTextures() {
     for (auto& t : textures) {
@@ -88,9 +86,13 @@ std::tuple<unsigned, unsigned, unsigned> Sprite::generateVao(const VaoType &v){
     {
         case VaoType::CENTER: {
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_center), vertices_center, GL_STATIC_DRAW);
+            //std::cout << "VBO: binding VaoType::CENTER" << std::endl;
+            break;
         }
         case VaoType::BOTTOM_LEFT: {
             glBufferData(GL_ARRAY_BUFFER, sizeof(vertices_bottom_left), vertices_bottom_left, GL_STATIC_DRAW);
+            //std::cout << "VBO: binding VaoType::BOTTOM_LEFT" << std::endl;
+            break;
         }
     }
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
@@ -173,18 +175,6 @@ void Sprite::RenderAll(Shader& ourShader) {
     //Matrix[col][row]; 
     for (auto& s : renderList) {
         if (!s.isRendered) { continue; }
-
-        if(std::get<0>(vaos.at(s.vaoType)) == std::get<0>(vaos.at(VaoType::CENTER)))
-        {
-            s.Color = glm::vec4(1,0,0,1);
-            //s.Scale = glm::vec4(0.8f,0.8f,1,1);
-        }
-        else if(std::get<0>(vaos.at(s.vaoType)) == std::get<0>(vaos.at(VaoType::BOTTOM_LEFT))){
-            s.Color = glm::vec4(0,1,0,1);
-            //s.Scale = glm::vec4(0.8f,0.8f,1,1);
-        }
-        s.Scale = glm::vec4(3.8f,3.8f,1,1);
-
         glm::mat4 trans = glm::mat4(1.0f);
         glm::mat4 temp = glm::mat4(1.0f);
         //Position
@@ -205,10 +195,8 @@ void Sprite::RenderAll(Shader& ourShader) {
         temp[0][0] = s.Scale.x / 16.0;
         temp[1][1] = s.Scale.y / 9.0;
         trans = trans * temp;
+        //Bind VAO
         glBindVertexArray(std::get<0>(vaos.at(s.vaoType)));
-        //glBindBuffer(GL_ARRAY_BUFFER, std::get<1>(vaos.at(s.vaoType)));
-        //std::cout << " Binding: " <<std::get<0>(vaos.at(s.vaoType))<< std::endl;
-        
         //Bind texture
         glActiveTexture(GL_TEXTURE0); // activate the texture unit first before binding texture
         glBindTexture(GL_TEXTURE_2D, s.texture);
