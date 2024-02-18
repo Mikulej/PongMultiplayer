@@ -5,8 +5,10 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-int SCR_WIDTH = 800;
-int SCR_HEIGHT = 600;
+int SCR_WIDTH = 1600;
+int SCR_HEIGHT = 900;
+float deltaTime = 0.0f; // Time between current frame and last frame
+float lastFrame = 0.0f; // Time of last frame
 
 int main()
 {
@@ -49,16 +51,17 @@ int main()
     Shader ourShader("shader/vs.glsl", "shader/fs.glsl");
 
     glfwSwapInterval(1);
-
+   
     // tell opengl for each sampler to which texture unit it belongs to (only has to be done once)
     // -------------------------------------------------------------------------------------------
     ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
+   
     Sprite::Initialize();
-    Sprite::AddSprite("box",0,0,0,VaoType::BOTTOM_LEFT);
-    Sprite::AddSprite("box",0,0,0,VaoType::CENTER);
-    //Sprite::AddSprite("box",-0.2f,-0.2f,0,VaoType::CENTER);
-    //Sprite::AddSprite("box",-0.4f,-0.4f,0,VaoType::BOTTOM_LEFT);
+    int idplayer1 = Sprite::Add("box",0.8,0,0);
+    Sprite::get(idplayer1).setScale(0.5,2.5);
+    int idplayer2 = Sprite::Add("box",-0.8f,0,0);
+    Sprite::get(idplayer2).setScale(0.5,2.5);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -71,7 +74,7 @@ int main()
         // render
         // ------
        
-        glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+        glClearColor(0, 0, 0, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         Sprite::RenderAll(ourShader);
         // render container
@@ -99,6 +102,24 @@ void processInput(GLFWwindow *window)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
+
+    float currentFrame = glfwGetTime();
+    deltaTime = currentFrame - lastFrame;
+    lastFrame = currentFrame;
+
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        Sprite::get(0).addPos(0,1.0f*deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        Sprite::get(0).addPos(0,-1.0f*deltaTime);
+    }
+
+     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+        Sprite::get(1).addPos(0,-1.0f*deltaTime);
+    }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+        Sprite::get(1).addPos(0,1.0f*deltaTime);
+    }
 }
 
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes

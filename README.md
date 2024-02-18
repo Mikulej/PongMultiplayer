@@ -6,8 +6,8 @@
 
 
 TO DO:
-DELETE VAO VBO EBO
-change color of the background
-Tuple {VAO, VBO, EBO} is an overkill store VAO only
+Player Class - for handling input and moving platform
+Platform class - for hitboxes?
+System stanów https://refactoring.guru/pl/design-patterns/state
 
 Server - Client

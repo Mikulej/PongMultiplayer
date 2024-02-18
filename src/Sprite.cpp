@@ -11,7 +11,6 @@ Sprite::Sprite(unsigned int _texture, float _x, float _y, unsigned int _layer, V
     angle = 0;
     isRendered = true;
 }
-//TO DO make a map for VAOs and use it similiar to textures
 void Sprite::Initialize() {
     stbi_set_flip_vertically_on_load(true); // tell stb_image.h to flip loaded texture's on the y-axis.
     textures.insert({"box",generateTexture("../res/box.png") });
@@ -116,13 +115,13 @@ std::tuple<unsigned, unsigned, unsigned> Sprite::generateVao(const VaoType &v){
 /// <param name="_layer"></param>
 /// <param name="_VAO"></param>
 /// <returns>Index in renderList to allocated sprite</returns>
-int Sprite::AddSprite(std::string _texture, float _x, float _y, unsigned int _layer, VaoType _VAO) {
+int Sprite::Add(std::string _texture, float _x, float _y, unsigned int _layer, VaoType _VAO) {
     auto tex = textures.find(_texture);
     int i = 0;
     for (vector<Sprite>::iterator it = renderList.begin(), finish = renderList.end(); it != finish; it++,i++) {
         if (it->layer > _layer) {
             //allocate at it//layer doesnt exsits//
-            std::cout << "Layer \"" << _layer << "\" doesnt exsit - added before first of \""<< it->layer <<"\" at [" << i << "]" << std::endl;
+            //std::cout << "Layer \"" << _layer << "\" doesnt exsit - added before first of \""<< it->layer <<"\" at [" << i << "]" << std::endl;
             renderList.insert(it, Sprite(tex->second, _x, _y, _layer, _VAO));
             return i;
         }
@@ -141,26 +140,26 @@ int Sprite::AddSprite(std::string _texture, float _x, float _y, unsigned int _la
                 return !s.isRendered;
             });
             if (notRendered == finish2) {//all are rendered add new at back of this layer
-                std::cout << "Layer \"" << _layer << "\" exsits - all rendered - added as the last at [" << i + 1 << "]" << std::endl;
+                //std::cout << "Layer \"" << _layer << "\" exsits - all rendered - added as the last at [" << i + 1 << "]" << std::endl;
                 finish2--;
                 renderList.insert(finish2, Sprite(tex->second, _x, _y, _layer, _VAO));
-                return i + 1;
+                return i;
             }
             //replace notRendered
-            std::cout << "Layer \"" << _layer << "\" exsits - replacing not rendered at [" << i << "]" << std::endl;
+            //std::cout << "Layer \"" << _layer << "\" exsits - replacing not rendered at [" << i << "]" << std::endl;
             renderList[i] = Sprite(tex->second, _x, _y, _layer, _VAO);
             return i;
         }
     }
     //if _layer is highest in vector (layer doesnt exsits)
-    std::cout << "Layer \"" << _layer << "\" doesnt exsit - added at [" << i << "]" << std::endl;
+    //std::cout << "Layer \"" << _layer << "\" doesnt exsit - added at [" << i << "]" << std::endl;
     renderList.push_back(Sprite(tex->second, _x, _y, _layer, _VAO));
     return i;
 }
-void Sprite::DeleteSprite(unsigned int _ID) {
+void Sprite::Delete(unsigned int _ID) {
     renderList[_ID].isRendered = false;
 }
-void Sprite::DeleteSprite() {
+void Sprite::Delete() {
     isRendered = false;
 }
 void Sprite::RenderAll(Shader& ourShader) {
@@ -213,4 +212,10 @@ void Sprite::setScale(float x, float y) {
 }
 void Sprite::setPos(float x, float y) {
     Pos.x = x; Pos.y = y;
+}
+void Sprite::addPos(float x, float y){
+    Pos.x += x; Pos.y += y;
+}
+Sprite& Sprite::get(unsigned int _ID){
+    return renderList[_ID];
 }

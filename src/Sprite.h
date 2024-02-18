@@ -29,17 +29,18 @@ class Sprite final {
 	bool isRendered;
     static std::vector<Sprite> renderList;
 public:
-	
 	static void Initialize(void);
 	static void DeleteTextures(void);
 	~Sprite() = default;
 	static void RenderAll(Shader& ourShader);
-	static int AddSprite(std::string _texture, float _x = 0, float _y = 0, unsigned int _layer = 0, VaoType _VAO = VaoType::CENTER);
-	static void DeleteSprite(unsigned int _ID);
-	void DeleteSprite();
+	static int Add(std::string _texture, float _x = 0, float _y = 0, unsigned int _layer = 0, VaoType _VAO = VaoType::CENTER);
+	static void Delete(unsigned int _ID);
+	void Delete();
 	//MATRIX MAINPULATION
 	//void setColor(int _c = -1, bool _marked = false);
 	void setScale(float x, float y);
 	void setPos(float x, float y);
+    void addPos(float x, float y);
+    static Sprite& get(unsigned int _ID);
 };
 #endif
