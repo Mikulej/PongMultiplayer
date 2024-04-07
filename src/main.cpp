@@ -60,8 +60,10 @@ int main()
     Sprite::Initialize();
     int idplayer1 = Sprite::Add("box",0.8,0,0);
     Sprite::get(idplayer1).setScale(0.5,2.5);
-    int idplayer2 = Sprite::Add("box",-0.8f,0,0);
+    int idplayer2 = Sprite::Add("box",-0.8f,1,0);
     Sprite::get(idplayer2).setScale(0.5,2.5);
+    Sprite::Add("box",-0.4f,0,0);
+    Sprite::Add("box",-0.6f,0,0);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -113,8 +115,7 @@ void processInput(GLFWwindow *window)
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         Sprite::get(0).addPos(0,-1.0f*deltaTime);
     }
-
-     if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
         Sprite::get(1).addPos(0,-1.0f*deltaTime);
     }
     if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {

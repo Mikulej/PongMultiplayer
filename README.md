@@ -4,10 +4,16 @@
 3. Draw game screen using OpenGL, update vertices data
 4. When game ends it will restart in 5 second unless someone disconnects
 
-
+DONE:
+Render-engine enough good for this project
 TO DO:
 Player Class - for handling input and moving platform
 Platform class - for hitboxes?
 System stanów https://refactoring.guru/pl/design-patterns/state
 
+
 Server - Client
+
+
+THOUGHTS:
+Next time use z-buffer for depth
