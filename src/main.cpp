@@ -56,14 +56,21 @@ int main()
     // -------------------------------------------------------------------------------------------
     ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
-   
+   Socket::Initialize();
+   Socket s(66670);
+   s.Connect("127.0.0.1");
+   s.Send("No siema!");
+
+
     Sprite::Initialize();
-    int idplayer1 = Sprite::Add("box",0.8,0,0);
-    Sprite::get(idplayer1).setScale(0.5,2.5);
-    int idplayer2 = Sprite::Add("box",-0.8f,1,0);
-    Sprite::get(idplayer2).setScale(0.5,2.5);
-    Sprite::Add("box",-0.4f,0,0);
-    Sprite::Add("box",-0.6f,0,0);
+    Sprite::Add("box",0.3,0.3,0);
+    Sprite::get(0).setColor(glm::vec4(1,0,0,1));
+    Collider::Initialize();
+    
+
+    // Sprite::get(idplayer1).setScale(0.5,2.5);
+    // int idplayer2 = Sprite::Add("box",-0.8f,0,0);
+    // Sprite::get(idplayer2).setScale(0.5,2.5);
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))

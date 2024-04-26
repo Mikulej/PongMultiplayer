@@ -11,6 +11,8 @@
 #include "shader.h"
 
 #include "Sprite.h"
+#include "Collider.h"
+#include "Socket.h"
 
 #include <iostream>
 

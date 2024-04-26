@@ -6,6 +6,10 @@
 
 DONE:
 Render-engine enough good for this project
+STEPS:
+1. Implement AABB or check if box2D works
+2. Make ball bouncy
+3. Connect to the server
 TO DO:
 Player Class - for handling input and moving platform
 Platform class - for hitboxes?

@@ -9,7 +9,6 @@
 #include "glm-master/glm/gtc/type_ptr.hpp"
 #include <stb_image.h>
 
-using namespace std;
 enum class VaoType { CENTER, BOTTOM_LEFT };
 class Sprite final {
 	static std::unordered_map<std::string,unsigned int> textures;
@@ -39,6 +38,7 @@ public:
 	//MATRIX MAINPULATION
 	//void setColor(int _c = -1, bool _marked = false);
 	void setScale(float x, float y);
+    void setColor(glm::vec4 color);
 	void setPos(float x, float y);
     void addPos(float x, float y);
     static Sprite& get(unsigned int _ID);

@@ -118,7 +118,7 @@ std::tuple<unsigned, unsigned, unsigned> Sprite::generateVao(const VaoType &v){
 int Sprite::Add(std::string _texture, float _x, float _y, unsigned int _layer, VaoType _VAO) {
     auto tex = textures.find(_texture);
     int i = 0;
-    for (vector<Sprite>::iterator it = renderList.begin(), finish = renderList.end(); it != finish; it++,i++) {
+    for (std::vector<Sprite>::iterator it = renderList.begin(), finish = renderList.end(); it != finish; it++,i++) {
         if (it->layer > _layer) {
             //allocate at it//layer doesnt exsits//
             //std::cout << "Layer \"" << _layer << "\" doesnt exsit - added before first of \""<< it->layer <<"\" at [" << i << "]" << std::endl;
@@ -127,7 +127,7 @@ int Sprite::Add(std::string _texture, float _x, float _y, unsigned int _layer, V
         }
         if (it->layer == _layer) {//layer exists//find if any object in this layer is not rendered
             //find last object of _layer layer
-            auto finish2 = find_if(it, finish, [&_layer](const Sprite& s) -> bool {
+            auto finish2 = std::find_if(it, finish, [&_layer](const Sprite& s) -> bool {
             return _layer != s.layer;
             });
             if (finish2 != finish) {
@@ -135,7 +135,7 @@ int Sprite::Add(std::string _texture, float _x, float _y, unsigned int _layer, V
             }
             //find not rendered among this layer
             i--;
-            auto notRendered = find_if(it, finish2, [&i](const Sprite& s) -> bool {
+            auto notRendered = std::find_if(it, finish2, [&i](const Sprite& s) -> bool {
                 i++;
                 return !s.isRendered;
             });
@@ -218,4 +218,7 @@ void Sprite::addPos(float x, float y){
 }
 Sprite& Sprite::get(unsigned int _ID){
     return renderList[_ID];
+}
+void Sprite::setColor(glm::vec4 color){
+    Color = color;
 }
