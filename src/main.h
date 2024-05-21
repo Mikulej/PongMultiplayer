@@ -15,5 +15,7 @@
 #include "Socket.h"
 
 #include <iostream>
+#include <thread>
+#include <time.h>
 
 #endif 

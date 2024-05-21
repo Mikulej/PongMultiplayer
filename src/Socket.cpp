@@ -47,7 +47,7 @@ std::string Socket::Receive(){
     char buffer[100] ={0};
     int byteCount = recv(clientSocket,buffer,sizeof(buffer),0);
     if(byteCount > 0){
-        std::cout<<"Received message: "<< buffer << std::endl;
+        //std::cout<<"Received message: "<< buffer << std::endl;
     }
     else{
        WSACleanup();
@@ -58,7 +58,7 @@ std::string Socket::Receive(){
 void Socket::Send(std::string buffer){
     int byteCount = send(clientSocket,buffer.data(),sizeof(buffer.data()),0);
      if(byteCount > 0){
-        std::cout<<"Sent message: "<< buffer << std::endl;
+        //std::cout<<"Sent message: "<< buffer << std::endl;
     }
     else{
        WSACleanup();

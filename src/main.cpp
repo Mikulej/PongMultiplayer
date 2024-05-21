@@ -2,7 +2,7 @@
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow *window);
+void processInput(GLFWwindow *window, Socket& s);
 
 // settings
 int SCR_WIDTH = 1600;
@@ -28,7 +28,7 @@ int main()
 
     // glfw window creation
     // --------------------
-    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
+    GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "Pong Multiplayer", NULL, NULL);
     if (window == NULL)
     {
         std::cout << "Failed to create GLFW window" << std::endl;
@@ -56,15 +56,41 @@ int main()
     // -------------------------------------------------------------------------------------------
     ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
-   Socket::Initialize();
-   Socket s(66670);
-   s.Connect("127.0.0.1");
-   s.Send("No siema!");
+
+    Socket::Initialize();
+    std::unique_ptr<Socket> s(new Socket(66671));
+    s->Connect("127.0.0.1");
+    // auto networkLambda = [](){
+        // Socket::Initialize();
+        // Socket s(66670);
+        // s.Connect("127.0.0.1");
+        // clock_t this_time = clock();
+        // clock_t last_time = this_time;
+        // double time_counter = 0;
+        // while(true)
+        // {
+        //     this_time = clock();
+
+        //     time_counter += (double)(this_time - last_time);
+
+        //     last_time = this_time;
+
+        //     if(time_counter > (double)(5 * CLOCKS_PER_SEC))
+        //     {
+        //         time_counter -= (double)(5 * CLOCKS_PER_SEC);
+        //         s.Send("No siema!");
+        //     }
+        // }
+
+    // };
+
+    //std::thread networkThread(networkLambda);
+   
 
 
     Sprite::Initialize();
-    Sprite::Add("box",0.3,0.3,0);
-    Sprite::get(0).setColor(glm::vec4(1,0,0,1));
+    //Sprite::Add("box",0.3,0.3,0);
+    //Sprite::get(0).setColor(glm::vec4(1,0,0,1));
     Collider::Initialize();
     
 
@@ -78,7 +104,7 @@ int main()
         // input
         // -----
         glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT);
-        processInput(window);
+        processInput(window,*s);
 
         // render
         // ------
@@ -104,10 +130,9 @@ int main()
     glfwTerminate();
     return 0;
 }
-
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window)
+void processInput(GLFWwindow *window, Socket &s)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -116,17 +141,22 @@ void processInput(GLFWwindow *window)
     deltaTime = currentFrame - lastFrame;
     lastFrame = currentFrame;
 
+    bool neutralInput = true;
+    // if (glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        
+    // }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         Sprite::get(0).addPos(0,1.0f*deltaTime);
+        neutralInput = false;
+        s.Send("8");
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         Sprite::get(0).addPos(0,-1.0f*deltaTime);
+        neutralInput = false;
+        s.Send("2");
     }
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
-        Sprite::get(1).addPos(0,-1.0f*deltaTime);
-    }
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
-        Sprite::get(1).addPos(0,1.0f*deltaTime);
+    if(neutralInput){
+        s.Send("5");
     }
 }
 
