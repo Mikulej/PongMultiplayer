@@ -9,7 +9,12 @@ int SCR_WIDTH = 1600;
 int SCR_HEIGHT = 900;
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
-
+std::string receiveData(std::shared_ptr<Socket> socket){
+    return socket->Receive();
+}
+void processReceivedData(std::string str){
+    
+}
 int main()
 {
     //networking: connect to server
@@ -58,8 +63,11 @@ int main()
     // either set it manually like so:
 
     Socket::Initialize();
-    std::unique_ptr<Socket> s(new Socket(66671));
+    std::shared_ptr<Socket> s(new Socket(66671));
     s->Connect("127.0.0.1");
+    // while(true){
+    //     std::cout << s->Receive() << std::endl;
+    // }
     // auto networkLambda = [](){
         // Socket::Initialize();
         // Socket s(66670);
@@ -146,12 +154,12 @@ void processInput(GLFWwindow *window, Socket &s)
         
     // }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        Sprite::get(0).addPos(0,1.0f*deltaTime);
+        //Sprite::get(0).addPos(0,1.0f*deltaTime);
         neutralInput = false;
         s.Send("8");
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        Sprite::get(0).addPos(0,-1.0f*deltaTime);
+        //Sprite::get(0).addPos(0,-1.0f*deltaTime);
         neutralInput = false;
         s.Send("2");
     }
