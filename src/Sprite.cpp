@@ -210,6 +210,12 @@ void Sprite::RenderAll(Shader& ourShader) {
 void Sprite::setScale(float x, float y) {
     Scale.x = x; Scale.y = y;
 }
+float Sprite::getScaleX(){
+    return Scale.x;
+}
+float Sprite::getScaleY(){
+    return Scale.y;
+}
 void Sprite::setPos(float x, float y) {
     Pos.x = x; Pos.y = y;
 }

@@ -1,9 +1,11 @@
 #include "Collider.h"
 using namespace std;
 std::vector<Collider> Collider::colliderList;
-Collider::Collider(float x,float y,float width,float height):x(x),y(y),width(width),height(height){
+Collider::Collider(float x,float y,float scaleX,float scaleY):x(x),y(y){
     img_id = Sprite::Add("box",x,y);
-    Sprite::get(img_id).setScale(width,height);
+    Sprite::get(img_id).setScale(scaleX,scaleY);
+    width = Sprite::get(img_id).getScaleX() / 16.0f;
+    height = Sprite::get(img_id).getScaleY() / 9.0f;
 }
 void Collider::Initialize(){
     //add all elements to colliderlist here
@@ -11,6 +13,8 @@ void Collider::Initialize(){
     colliderList.push_back(Collider(0,0,0.2f,0.2f));
     colliderList.push_back(Collider(0.8f,0,0.5f,2.5f));
     colliderList.push_back(Collider(-0.8f,0,0.5f,2.5f));
+    colliderList.push_back(Collider(-0.5f,0,1.0,1.0));
+    colliderList.push_back(Collider(0.5f,0,2.0,2.0));
 }
 bool Collider::Collision(){
     for (vector<Collider>::iterator i1 = colliderList.begin(), finish = colliderList.end(); i1 != finish; i1++){

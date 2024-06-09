@@ -38,6 +38,8 @@ public:
 	//MATRIX MAINPULATION
 	//void setColor(int _c = -1, bool _marked = false);
 	void setScale(float x, float y);
+    float getScaleX(void);
+    float getScaleY(void);
     void setColor(glm::vec4 color);
 	void setPos(float x, float y);
     void addPos(float x, float y);
