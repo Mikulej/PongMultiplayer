@@ -5,8 +5,8 @@ void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window, Socket& s);
 
 // settings
-int SCR_WIDTH = 1600;
-int SCR_HEIGHT = 900;
+int SCR_WIDTH = 600;//1600;
+int SCR_HEIGHT = 300;//900;
 float deltaTime = 0.0f; // Time between current frame and last frame
 float lastFrame = 0.0f; // Time of last frame
 std::string receiveData(std::shared_ptr<Socket> socket){
@@ -97,8 +97,6 @@ int main()
 
 
     Sprite::Initialize();
-    //Sprite::Add("box",0.3,0.3,0);
-    //Sprite::get(0).setColor(glm::vec4(1,0,0,1));
     Collider::Initialize();
     
 
