@@ -21,8 +21,9 @@ void Client::sendData(std::string buffer){
     
 // }
 void Client::receiveData(void){
+    std:: cout << "receiveData!" << std::endl;
     while(true){//temporary!
         bufferData = socket.get()->Receive();
-        std:: cout << bufferData << std::endl;
+        std::cout << "START" << bufferData << "STOP" << std::endl;
     }
 }

@@ -61,11 +61,9 @@ int main()
     // either set it manually like so:
 
     Socket::Initialize();
-    //std::shared_ptr<Socket> s(new Socket(66671));
-    //s->Connect("127.0.0.1");
     Client client("127.0.0.1");
-    //client.receiveData();
-    //std::thread thread(receiveData);
+    //client.startReceivingData();
+    std::thread thread(&Client::receiveData, client);
 
     Sprite::Initialize();
     Collider::Initialize();
@@ -100,7 +98,7 @@ int main()
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
-    //thread.join();
+    thread.join();
     glfwTerminate();
     return 0;
 }
@@ -120,12 +118,10 @@ void processInput(GLFWwindow *window, Client &c)
         
     // }
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        //Sprite::get(0).addPos(0,1.0f*deltaTime);
         neutralInput = false;
         c.sendData("8");
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        //Sprite::get(0).addPos(0,-1.0f*deltaTime);
         neutralInput = false;
         c.sendData("2");
     }

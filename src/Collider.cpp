@@ -13,8 +13,6 @@ void Collider::Initialize(){
     colliderList.push_back(Collider(0,0,0.2f,0.2f));
     colliderList.push_back(Collider(0.8f,0,0.5f,2.5f));
     colliderList.push_back(Collider(-0.8f,0,0.5f,2.5f));
-    colliderList.push_back(Collider(-0.5f,0,1.0,1.0));
-    colliderList.push_back(Collider(0.5f,0,2.0,2.0));
 }
 bool Collider::Collision(){
     for (vector<Collider>::iterator i1 = colliderList.begin(), finish = colliderList.end(); i1 != finish; i1++){
