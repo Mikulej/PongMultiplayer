@@ -2,7 +2,7 @@
 
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
-void processInput(GLFWwindow *window, Socket& s);
+void processInput(GLFWwindow *window, Client& c);
 
 // settings
 int SCR_WIDTH = 600;//1600;
@@ -12,9 +12,7 @@ float lastFrame = 0.0f; // Time of last frame
 std::string receiveData(std::shared_ptr<Socket> socket){
     return socket->Receive();
 }
-void processReceivedData(std::string str){
-    
-}
+void processReceivedData(std::string str);
 int main()
 {
     //networking: connect to server
@@ -63,46 +61,15 @@ int main()
     // either set it manually like so:
 
     Socket::Initialize();
-    std::shared_ptr<Socket> s(new Socket(66671));
-    s->Connect("127.0.0.1");
-    // while(true){
-    //     std::cout << s->Receive() << std::endl;
-    // }
-    // auto networkLambda = [](){
-        // Socket::Initialize();
-        // Socket s(66670);
-        // s.Connect("127.0.0.1");
-        // clock_t this_time = clock();
-        // clock_t last_time = this_time;
-        // double time_counter = 0;
-        // while(true)
-        // {
-        //     this_time = clock();
-
-        //     time_counter += (double)(this_time - last_time);
-
-        //     last_time = this_time;
-
-        //     if(time_counter > (double)(5 * CLOCKS_PER_SEC))
-        //     {
-        //         time_counter -= (double)(5 * CLOCKS_PER_SEC);
-        //         s.Send("No siema!");
-        //     }
-        // }
-
-    // };
-
-    //std::thread networkThread(networkLambda);
-   
-
+    //std::shared_ptr<Socket> s(new Socket(66671));
+    //s->Connect("127.0.0.1");
+    Client client("127.0.0.1");
+    //client.receiveData();
+    //std::thread thread(receiveData);
 
     Sprite::Initialize();
     Collider::Initialize();
-    
-
-    // Sprite::get(idplayer1).setScale(0.5,2.5);
-    // int idplayer2 = Sprite::Add("box",-0.8f,0,0);
-    // Sprite::get(idplayer2).setScale(0.5,2.5);
+   
     // render loop
     // -----------
     while (!glfwWindowShouldClose(window))
@@ -110,7 +77,7 @@ int main()
         // input
         // -----
         glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT);
-        processInput(window,*s);
+        processInput(window, client);
 
         // render
         // ------
@@ -133,12 +100,13 @@ int main()
 
     // glfw: terminate, clearing all previously allocated GLFW resources.
     // ------------------------------------------------------------------
+    //thread.join();
     glfwTerminate();
     return 0;
 }
 // process all input: query GLFW whether relevant keys are pressed/released this frame and react accordingly
 // ---------------------------------------------------------------------------------------------------------
-void processInput(GLFWwindow *window, Socket &s)
+void processInput(GLFWwindow *window, Client &c)
 {
     if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
         glfwSetWindowShouldClose(window, true);
@@ -154,18 +122,20 @@ void processInput(GLFWwindow *window, Socket &s)
     if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
         //Sprite::get(0).addPos(0,1.0f*deltaTime);
         neutralInput = false;
-        s.Send("8");
+        c.sendData("8");
     }
     if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
         //Sprite::get(0).addPos(0,-1.0f*deltaTime);
         neutralInput = false;
-        s.Send("2");
+        c.sendData("2");
     }
     if(neutralInput){
-        s.Send("5");
+        c.sendData("5");
     }
 }
-
+void processReceivedData(std::string str){
+    
+}
 // glfw: whenever the window size changed (by OS or user resize) this callback function executes
 // ---------------------------------------------------------------------------------------------
 void framebuffer_size_callback(GLFWwindow* window, int width, int height)

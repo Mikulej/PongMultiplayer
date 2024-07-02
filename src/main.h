@@ -13,6 +13,7 @@
 #include "Sprite.h"
 #include "Collider.h"
 #include "Socket.h"
+#include "Client.h"
 
 #include <iostream>
 #include <thread>

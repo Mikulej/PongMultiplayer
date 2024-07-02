@@ -57,7 +57,7 @@ std::string Socket::Receive(){
 
 void Socket::Send(std::string buffer){
     int byteCount = send(clientSocket,buffer.data(),sizeof(buffer.data()),0);
-     if(byteCount > 0){
+    if(byteCount > 0){
         //std::cout<<"Sent message: "<< buffer << std::endl;
     }
     else{
