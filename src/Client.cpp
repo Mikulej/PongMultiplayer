@@ -5,13 +5,16 @@ void Client::readIp(void){
 }
 Client::Client(): playerId(1){
     readIp();
-    socket = std::make_shared<Socket>(66671);
+    socket = std::make_shared<Socket>(27001);
     if(socket->Connect(destinationIp) == 0){
         playerId++;
-        socket = std::make_shared<Socket>(66672);
+        socket = std::make_shared<Socket>(27002);
         if(socket->Connect(destinationIp) == 0){
             std:: cout << "Cant connect to the server" << std::endl;
         }
+    }
+    else{
+        std:: cout << "Connected using port 27001" << std::endl;
     }
     
 }
