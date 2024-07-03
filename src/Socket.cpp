@@ -46,6 +46,7 @@ int Socket::Connect(std::string ip){
 std::string Socket::Receive(){
     char buffer[100] ={0};
     int byteCount = recv(clientSocket,buffer,sizeof(buffer),0);
+    //std::cout << "byteCount=" << byteCount << std::endl;
     if(byteCount > 0){
         //std::cout<<"Received message: "<< buffer << std::endl;
     }
@@ -56,7 +57,7 @@ std::string Socket::Receive(){
 }
 
 void Socket::Send(std::string buffer){
-    int byteCount = send(clientSocket,buffer.data(),sizeof(buffer.data()),0);
+    int byteCount = send(clientSocket,buffer.data(),buffer.size(),0);
     if(byteCount > 0){
         //std::cout<<"Sent message: "<< buffer << std::endl;
     }

@@ -76,10 +76,10 @@ int main()
         // -----
         glfwGetWindowSize(window, &SCR_WIDTH, &SCR_HEIGHT);
         processInput(window, client);
-
+       
         // render
         // ------
-       
+        Collider::UpdateAllPos();
         glClearColor(0, 0, 0, 1.0f);
         glClear(GL_COLOR_BUFFER_BIT);
         Sprite::RenderAll(ourShader);

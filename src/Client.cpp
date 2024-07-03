@@ -21,9 +21,12 @@ void Client::sendData(std::string buffer){
     
 // }
 void Client::receiveData(void){
-    std:: cout << "receiveData!" << std::endl;
-    while(true){//temporary!
+    while(true){
         bufferData = socket.get()->Receive();
-        std::cout << "START" << bufferData << "STOP" << std::endl;
+        Collider::processReceivedData(bufferData);
+        std::this_thread::sleep_for (std::chrono::milliseconds(tickrate));
     }
+}
+std::string Client::getBuffertData(void){
+    return bufferData;
 }
