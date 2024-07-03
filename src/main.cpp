@@ -61,7 +61,7 @@ int main()
     // either set it manually like so:
 
     Socket::Initialize();
-    Client client("127.0.0.1");
+    Client client;
     //client.startReceivingData();
     std::thread thread(&Client::receiveData, client);
 

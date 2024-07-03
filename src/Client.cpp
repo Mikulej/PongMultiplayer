@@ -1,6 +1,10 @@
 #include "Client.h"
-
-Client::Client(std::string destinationIp): destinationIp(destinationIp), playerId(1){
+void Client::readIp(void){
+    std::ifstream fs("../config.txt");
+    getline(fs,destinationIp);
+}
+Client::Client(): playerId(1){
+    readIp();
     socket = std::make_shared<Socket>(66671);
     if(socket->Connect(destinationIp) == 0){
         playerId++;
