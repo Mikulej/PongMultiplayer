@@ -10,9 +10,9 @@ class Client{
     std::shared_ptr<Socket> socket;
     std::string destinationIp;
     std::string bufferData;
-    int playerId;
     const int tickrate = 1000 / 64;
     void readIp(void);
+    int getSetPortFromServer(void);
     public:
     void sendData(std::string buffer);
     void startReceivingData(void);

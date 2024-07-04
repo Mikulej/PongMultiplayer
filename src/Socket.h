@@ -12,10 +12,12 @@ class Socket{
     static WSADATA wsaData;
     static int wsaerr;
     public:
-    Socket(int port);
+    Socket(int port = -1);
     int Connect(std::string ip);
     std::string Receive(void);
     void Send(std::string buffer);
     static void Initialize(void);
+    void setPort(int port);
+    void CloseAll(void);
 };
 #endif

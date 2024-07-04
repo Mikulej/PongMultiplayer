@@ -31,8 +31,9 @@ int Socket::Connect(std::string ip){
     LPCSTR sw = ip.c_str();
     InetPton(AF_INET,sw,&clientService.sin_addr.s_addr);
     clientService.sin_port=htons(port);
+    std::cout << "connecting to ip " << ip << " port " << port << std::endl;
     if(connect(clientSocket,(SOCKADDR*)&clientService,sizeof(clientService))==SOCKET_ERROR){
-        std::cout<<"Client: connect() - Failed to connect" << std::endl;
+        std::cout<<"Client: connect() - Failed to connect - error " << WSAGetLastError() << std::endl;
         WSACleanup();
         return 0;
     }
@@ -64,4 +65,10 @@ void Socket::Send(std::string buffer){
     else{
        WSACleanup();
     }
+}
+void Socket::setPort(int port){
+    this->port = port;
+}
+void Socket::CloseAll(void){
+    WSACleanup();
 }
