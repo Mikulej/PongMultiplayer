@@ -6,18 +6,15 @@
 
 DONE:
 Render-engine enough good for this project
+Collision handling using Collider Class
 STEPS:
 1. Implement AABB or check if box2D works
 2. Make ball bouncy
 3. Connect to the server
 TO DO:
-Player Class - for handling input and moving platform
-Platform class - for hitboxes?
 System stanów https://refactoring.guru/pl/design-patterns/state
-
-
-Server - Client
-
 
 THOUGHTS:
 Next time use z-buffer for depth
+.dll hell
+Bad Package

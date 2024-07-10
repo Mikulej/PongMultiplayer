@@ -15,7 +15,7 @@ std::string receiveData(std::shared_ptr<Socket> socket){
 void processReceivedData(std::string str);
 int main()
 {
-    //networking: connect to server
+ 
     
     // glfw: initialize and configure
     // ------------------------------
@@ -60,9 +60,10 @@ int main()
     ourShader.use(); // don't forget to activate/use the shader before setting uniforms!
     // either set it manually like so:
 
+    // networking: connect to server
+    // -----------------------------
     Socket::Initialize();
     Client client;
-    //client.startReceivingData();
     std::thread thread(&Client::receiveData, client);
 
     Sprite::Initialize();

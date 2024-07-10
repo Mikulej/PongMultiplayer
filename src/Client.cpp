@@ -37,9 +37,6 @@ Client::~Client(){
 void Client::sendData(std::string buffer){
     socket->Send(buffer);
 }
-// void Client::startReceivingData(void){
-    
-// }
 void Client::receiveData(void){
     while(true){
         bufferData = socket.get()->Receive();
